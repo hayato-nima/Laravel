@@ -15,22 +15,43 @@ use App\Book;
 use Illuminate\Http\Request;
 
 /**
-* 本の一覧表示(books.blade.php)
-*/
+ * 本の一覧表示(books.blade.php)
+ */
 Route::get('/', function () {
     return view('books');
 });
 
 /**
-* 本を追加 
-*/
+ * 本を追加
+ */
 Route::post('/books', function (Request $request) {
-    //
+
+    //バリデーション
+    $validator = Validator::make($request->all(), [
+        'item_name' => 'required|max:255',
+    ]);
+
+    //バリデーション:エラー
+    if ($validator->fails()) {
+        return redirect('/')
+            ->withInput()
+            ->withErrors($validator);
+    }
+
+    // Eloquentモデル（登録処理）
+    $books = new Book;
+    $books->item_name = $request->item_name;
+    $books->item_number = '1';
+    $books->item_amount = '1000';
+    $books->published = '2017-03-07 00:00:00';
+    $books->save();
+    return redirect('/');
+
 });
 
 /**
-* 本を削除 
-*/
+ * 本を削除
+ */
 Route::delete('/book/{book}', function (Book $book) {
     //
 });
@@ -39,4 +60,3 @@ Route::delete('/book/{book}', function (Book $book) {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
