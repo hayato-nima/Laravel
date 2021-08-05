@@ -1,0 +1,30 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./docker/app
+      args:
+        DOCKER_UID: ${DOCKER_UID:-1000}
+    volumes:
+      - ./html:/var/www/html
+    ports:
+      - 10580:80
+  db:
+    build: ./docker/db
+    environment:
+      MYSQL_DATABASE: c9
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Tokyo
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    ports:
+      - 10581:80
+    volumes:
+      - ./docker/phpmyadmin/sessions:/sessions
