@@ -34,34 +34,44 @@
     </form>
 </div>
 <!-- Book: 既に登録されてる本のリスト -->
-    <!-- 現在の本 -->
-    @if (count($books) > 0)
-        <div class="card-body">
-            <div class="card-body">
-                <table class="table table-striped task-table">
-                    <!-- テーブルヘッダ -->
-                    <thead>
-                        <th>本一覧</th>
-                        <th>&nbsp;</th>
-                    </thead>
-                    <!-- テーブル本体 -->
-                    <tbody>
-                        @foreach ($books as $book)
-                            <tr>
-                                <!-- 本タイトル -->
-                                <td class="table-text">
-                                    <div>{{ $book->item_name }}</div>
-                                </td>
+<!-- 現在の本 -->
+@if (count($books) > 0)
+<div class="card-body">
+    <div class="card-body">
+        <table class="table table-striped task-table">
+            <!-- テーブルヘッダ -->
+            <thead>
+                <th>本一覧</th>
+                <th>&nbsp;</th>
+            </thead>
+            <!-- テーブル本体 -->
+            <tbody>
+                @foreach ($books as $book)
+                <tr>
+                    <!-- 本タイトル -->
+                    <td class="table-text">
+                        <div>{{ $book->item_name }}</div>
+                    </td>
 
-                                <!-- 本: 削除ボタン -->
-                                <td>
+                    <!-- 本: 削除ボタン -->
+                    <td>
+                        <form action="{{ url('book/'.$book->id) }}" method="POST">
+                            @csrf
+                            <!-- CSRFからの保護 -->
+                            @method('DELETE')
+                            <!-- 擬似フォームメソッド -->
 
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    @endif
+                            <button type="submit" class="btn btn-danger">
+                                削除
+                            </button>
+                        </form>
+
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
 @endsection

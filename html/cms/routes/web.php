@@ -50,14 +50,14 @@ Route::post('/books', function (Request $request) {
     $books->published = '2017-03-07 00:00:00';
     $books->save();
     return redirect('/');
-
 });
 
 /**
  * 本を削除
  */
 Route::delete('/book/{book}', function (Book $book) {
-    //
+    $book->delete();
+    return redirect('/');
 });
 
 
