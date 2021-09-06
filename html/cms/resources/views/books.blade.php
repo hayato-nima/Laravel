@@ -68,6 +68,16 @@
                         <div>{{ $book->item_name }}</div>
                     </td>
 
+                    <!-- 本: 更新ボタン -->
+                    <td>
+                        <form action="{{ url('booksedit/'.$book->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">
+                                更新
+                            </button>
+                        </form>
+                    </td>
+
                     <!-- 本: 削除ボタン -->
                     <td>
                         <form action="{{ url('book/'.$book->id) }}" method="POST">
