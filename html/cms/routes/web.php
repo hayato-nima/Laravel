@@ -21,10 +21,7 @@ Route::get('/', 'BooksController@index');
 Route::post('/books', 'BooksController@store');
 
 //更新画面
-Route::post('/booksedit/{books}', function (Book $books) {
-    //{books}id 値を取得 => Book $books id 値の1レコード取得
-    return view('booksedit', ['book' => $books]);
-});
+Route::post('/booksedit/{books}', 'BooksController@edit');
 
 //更新処理
 Route::post('/books/update', 'BooksController@update');
