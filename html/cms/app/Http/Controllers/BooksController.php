@@ -81,4 +81,10 @@ class BooksController extends Controller
         $books->save();
         return redirect('/');
     }
+
+    //削除処理
+    public function destroy(Book $book){
+        $book->delete();
+        return redirect('/');
+    }
 }

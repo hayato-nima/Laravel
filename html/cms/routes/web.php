@@ -26,15 +26,9 @@ Route::post('/booksedit/{books}', 'BooksController@edit');
 //更新処理
 Route::post('/books/update', 'BooksController@update');
 
-/**
- * 本を削除
- */
-Route::delete('/book/{book}', function (Book $book) {
-    $book->delete();
-    return redirect('/');
-});
+//本を削除
+Route::delete('/book/{book}', 'BooksController@destroy');
 
-
+//Auth
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
